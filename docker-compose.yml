@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+
+  app:
+    build: ./service
+    container_name: service_demo
+    ports:
+      - "80:8080"
+
+  redis:
+    container_name: redis_demo
+    image: redis:alpine
+    restart: always
+    hostname: redis
+    networks:
+      - redis-net
+    volumes:
+      - redis-data:/data
+
+  postgres:
+    container_name: postgres_demo
+    image: postgres:alpine
+    ports:
+      - "54320:5432"
+    hostname: postgres_host
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pwd123456
+      - POSTGRES_DB=db_postgres
+    volumes:
+      - my_dbdata:/var/lib/postgresql/data
+
+
+
+
+
+networks:
+  redis-net:
+
+volumes:
+  redis-data:
+  my_dbdata:
