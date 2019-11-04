@@ -14,12 +14,12 @@ The existing version of the web service it is an MVP version and it has been imp
 For this exercise, the web spiders project and web service project have been merged into one solution project- for demo purpose (docker-compose). I have structured the projects in a way where we can maintain and reduce the complexity of the code, in addition, to reduce code redundancy.
 
 I have implemented 3 projects:
-    - ``spiderlib``: it is a common library (link) that used between spiders and webservice project. I built it as package, and it has been added to web_spiders_ and  web_service_ as git submodule.
+    - ``spiderlib``: it is a common library (https://github.com/AmerJod/common) that used between spiders and webservice project. I built it as package, and it has been added to web_spiders_ and  web_service_ as git submodule.
        it contains 2 modules
         - db
         - logging
 
-    - ``web sepider``: it is project where we scraping a website and getting infromation from it. it contains 5 spiders that run on certain time ``[all days, at 11 am and 11 pm]``:
+    - ``web sepider``: it is group of web spider that scrape a website and getting information from it (https://github.com/AmerJod/web_spiders). it contains 5 spiders that run on certain time ``[all days, at 11 am and 11 pm]``:
         - Default Spider
         - Infinite Scroll Spider
         - Javascript Spider
@@ -27,7 +27,7 @@ I have implemented 3 projects:
         - Tableful Spider
 
 
-    - ``web service``: it is the web api, I build as package that uses uWSGI web server.
+    - ``web service``: it is the web api (https://github.com/AmerJod/web_spiders), I build as package that uses uWSGI web server.
 
 
 
@@ -151,6 +151,8 @@ The Database model
                     Column("quote_id", Integer, ForeignKey("quotes.quote_id")),
                     Column("tag_id", Integer, ForeignKey("tags.tag_id")),
 )
+
+
 Improvements
 ============
 Again it is difficult to know what the exact requirements are. However this solution could improve substantially especially when we scale up the project and the data received into it
@@ -173,4 +175,4 @@ on the root of the prject: run
 ``docker-compose up --biuld``
 
 
-*NB1*: Please Note, if you want to run the clone the project and run it, make sure that you get all the ``git submodules`` install into the project: ``git submodule add link``
+*NB1*: Please Note, if you want to run the clone the project and run it, make sure that you get all the ``git submodules`` install into the project: ``git submodule add link``, Also create a ``python env`` and install all the packages into it,
