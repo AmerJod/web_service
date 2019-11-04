@@ -164,7 +164,7 @@ if:
 3.  The web spiders are just inserting records into the DB, not updating existing records. This functionality needs to be added later.
 4.  Implement proxying for the web spiders, to avoid being blocked.
 5.  Add the ability of pause and resume the scraping job from where it's been left.
-4-  Unittest is important, all of the 3 projects should have a decent amount of unnittests.
+6.  Unittest is important, all of the 3 projects should have a decent amount of unnittests.
 
 
 Install and Run
