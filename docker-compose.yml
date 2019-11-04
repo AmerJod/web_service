@@ -3,41 +3,48 @@ version: "3"
 services:
 
   app:
-    build: ./service
+    build: .
     container_name: service_demo
+    depends_on:
+      - postgres
+      - redis
     ports:
       - "80:8080"
+
+  spiders:
+    build: spiders
+    container_name: spiders_demo
+    depends_on:
+      - postgres
+
 
   redis:
     container_name: redis_demo
     image: redis:alpine
     restart: always
     hostname: redis
-    networks:
-      - redis-net
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
     volumes:
-      - redis-data:/data
+      - redis-data:/var/lib/redis/data
 
   postgres:
     container_name: postgres_demo
     image: postgres:alpine
+    restart: always
     ports:
       - "54320:5432"
-    hostname: postgres_host
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=pwd123456
-      - POSTGRES_DB=db_postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     volumes:
-      - my_dbdata:/var/lib/postgresql/data
+      - postgres_dbdata:/var/lib/postgresql/data
 
 
-
-
-
-networks:
-  redis-net:
 
 volumes:
   redis-data:
-  my_dbdata:
+  postgres_dbdata:

@@ -1,17 +1,20 @@
 from flask.views import MethodView
 from sqlalchemy.orm.exc import NoResultFound
 
-from webservice import db, logger
+from webservice import db, logger, cache
 from webservice.utils import HTTPResponse
+from webservice.utils.decorators import cache_it
 
 from spiderlib.db.db_modules.author import Author
 from spiderlib.db.db_modules.quote import Quote
 from spiderlib.db import DBEncoderDict
 
 
+
 class GetQuotesApi(MethodView):
     """ /api/{api_version}/quotes/<author_name> """
 
+    @cache_it(default_key='all_quotes', entity_name='Quotes', timeout=60)
     def get(self, author_name=None):
 
         """

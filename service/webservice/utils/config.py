@@ -7,30 +7,53 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    REDIS_CONN = {"host": "redis", "port": 6379}
+    """
+        Configuration for production environment
+    """
 
     POSTGRES_CONN = {
-        "POSTGRES_URL": "0.0.0.0:54320",
+        "POSTGRES_URL": "postgres",
         "POSTGRES_USER": "postgres",
-        "POSTGRES_PW": "pwd123456",
-        "POSTGRES_DB": "db_postgres",
+        "POSTGRES_PW": "postgres",
+        "POSTGRES_DB": "postgres",
     }
 
-    # Enable and disable lazy_load
+    REDIS_CONFIG = {
+        "CACHE_TYPE": "redis",
+        "CACHE_KEY_PREFIX": "fcache",
+        "CACHE_REDIS_HOST": "redis",
+        "CACHE_REDIS_PORT": "6379",
+        "CACHE_DEFAULT_TIMEOUT": 300,
+        'CACHE_REDIS_URL': "redis://redis:6379"
+    }
+
+    # Enable and disable lazy loading the db
     DATABASE_LAZY_LOAD = False
 
 
 class DevelopmentConfig(Config):
-    REDIS_CONN = {"host": "redis", "port": 6379}
+    """
+        Configuration for development environment
+    """
+
 
     POSTGRES_CONN = {
         "POSTGRES_URL": "0.0.0.0:54320",
         "POSTGRES_USER": "postgres",
-        "POSTGRES_PW": "pwd123456",
-        "POSTGRES_DB": "db_postgres",
+        "POSTGRES_PW": "postgres",
+        "POSTGRES_DB": "postgres",
     }
 
-    # Enable and disable lazy_load
+    REDIS_CONFIG = {
+        "CACHE_TYPE": "redis",
+        "CACHE_KEY_PREFIX": "fcache",
+        "CACHE_REDIS_HOST": "redis",
+        "CACHE_REDIS_PORT": "6379",
+        "CACHE_DEFAULT_TIMEOUT": 300,
+        'CACHE_REDIS_URL': "redis://redis:6379"
+    }
+
+    # Enable and disable lazy loading for the db
     DATABASE_LAZY_LOAD = False
 
 

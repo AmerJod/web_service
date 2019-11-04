@@ -1,8 +1,10 @@
+
 from flask.views import MethodView
 from sqlalchemy.orm.exc import NoResultFound
 
 from webservice import db, logger
 from webservice.utils import HTTPResponse
+from webservice.utils.decorators import cache_it
 
 from spiderlib.db.db_modules import Author
 from spiderlib.db import DBEncoderDict
@@ -11,6 +13,7 @@ from spiderlib.db import DBEncoderDict
 class GetAuthersApi(MethodView):
     """ /api/{api_version}/authors/<author_name> """
 
+    @cache_it(default_key='all_authors', entity_name='Author', timeout=60)
     def get(self, author_name=None):
 
         """
@@ -22,8 +25,6 @@ class GetAuthersApi(MethodView):
         """
 
         logger.info("get request, authors endpoint")
-
-        # redis.set('data1', data)
 
         try:
             if author_name:

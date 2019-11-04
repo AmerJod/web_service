@@ -16,10 +16,15 @@ logger = NewLogger(logger_name='web-service', store_flag=True).get_logger()
 
 # --------------- REDIS
 # Establish the rides connection
-import redis
-redis = redis.Redis(**config.REDIS_CONN)
-# Time to live - redis server
-ttl = 31104000 # one year
+# import redis
+# redis = redis.Redis(**config.REDIS_CONN)
+# # Time to live - redis server
+# ttl = 31104000 # one year
+
+from flask_caching import Cache
+cache = Cache(app, config=config.REDIS_CONFIG)
+
+
 
 
 # ---------------- DATABASE

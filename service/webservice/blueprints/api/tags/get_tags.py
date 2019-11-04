@@ -3,6 +3,8 @@ from flask.views import MethodView
 from webservice import db, logger
 
 from webservice.utils import HTTPResponse
+from webservice.utils.decorators import cache_it
+
 from spiderlib.db.db_modules.tag import Tag
 from spiderlib.db import DBEncoderDict
 
@@ -12,6 +14,7 @@ class GetTagsApi(MethodView):
     """ /api/{api_version}/tags/<id> """
 
     # TODO: to implement: get a certain number of tags
+    @cache_it(default_key='all_tags', entity_name='Tag', timeout=60)
     def get(self, number=None):
 
         """
@@ -19,6 +22,7 @@ class GetTagsApi(MethodView):
             Args:
                 number: the number of tags to show
             Return:
+                Json obj
         """
 
         logger.info("get request, tags endpoint")
