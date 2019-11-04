@@ -13,6 +13,7 @@ from spiderlib.db import DBEncoderDict
 class GetAuthersApi(MethodView):
     """ /api/{api_version}/authors/<author_name> """
 
+
     @cache_it(default_key='all_authors', entity_name='Author', timeout=60)
     def get(self, author_name=None):
 

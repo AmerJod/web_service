@@ -155,8 +155,7 @@ The Database model
 
 Improvements
 ============
-Again it is difficult to know what the exact requirements are. However this solution could improve substantially especially when we scale up the project and the data received into it
-if:
+  This solution could be improved substantially especially when we try to scale up the project and the data received into it by:
 
 1.  Indexes are created to speed up reads from database.
 2.  I tried as much as I can to abstract each project, and remove all the dependency between them. However, for the testing purposes, we have to comprise.
