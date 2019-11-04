@@ -1,3 +1,6 @@
 [submodule "common"]
 	path = common
 	url = https://github.com/AmerJod/common.git
+[submodule "web_spiders"]
+	path = web_spiders
+	url = https://github.com/AmerJod/web_spiders.git
