@@ -16,7 +16,10 @@ services:
     container_name: spiders_demo
     depends_on:
       - postgres
-
+    environment:
+      - SPIDERS_EVN=production
+      - RUN_WITH_SCHEDULER=True
+      - SPIDER_NAME=login_quotes
 
   redis:
     container_name: redis_demo
@@ -42,8 +45,6 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - postgres_dbdata:/var/lib/postgresql/data
-
-
 
 volumes:
   redis-data:

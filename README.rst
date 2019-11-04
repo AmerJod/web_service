@@ -19,7 +19,7 @@ I have implemented 3 projects:
         - db
         - logging
 
-    - ``web sepider``: it is group of web spider that scrape a website and getting information from it (https://github.com/AmerJod/web_spiders). it contains 5 spiders that run on certain time ``[all days, at 11 am and 11 pm]``:
+    - ``web sepider``: it is group of web spider that scrape a website and getting information from it (https://github.com/AmerJod/web_spiders). it contains 5 spiders that run on certain time ``[all days, at 11 am and 11 pm]`` using ``apscheduler`` and ``scrapy.crawler`` packages:
         - Default Spider
         - Infinite Scroll Spider
         - Javascript Spider
@@ -33,7 +33,23 @@ I have implemented 3 projects:
 
 API Endpoints
 =============
-The Flask app provides static endpoints for each entity in the spider's database. I implemented a smart caching technique using redis server. I build a python decorator and called it ``cache_it`` that takes 3 parameters for caching the endpoint.
+The Flask app provides static endpoints for each entity in the spider's database.
+Endpoints are reachable like this:
+
+1.  ``Authors:``
+        - ``/api/{api_version}/authors``: Gets all the authors' data with all the nested data such as quotes/tags objects for each author (eager loading).
+        - ``/api/{api_version}/authors/filter/<author_name>``: Gets the author's data, including its quotes/tags.
+
+2.  ``Quotes``:
+        - ``/api/{api_version}/quotes``: Gets all the quotes' data with all the nested data such as author/tags objects for each quote (eager loading).
+        - ``/api/{api_version}/quotes/filter/<author_name>``: Gets quotes data for a specific author.
+
+3.  ``Tags``:
+        - ``api/{api_version}/tags``: Gets all the tags objects.
+
+
+
+I implemented a smart caching technique using redis server. I build a python decorator and called it ``cache_it`` that takes 3 parameters for caching the endpoint.
     .. code-block:: python
 
         def cache_it(default_key=None, entity_name=None, timeout=60):
@@ -80,21 +96,6 @@ The Flask app provides static endpoints for each entity in the spider's database
          @cache_it(default_key='all_authors', entity_name='Author', timeout=60)
          def get(self, author_name=None):
                 ...
-
-
-
-Endpoints are reachable like this:
-
-1.  ``Authors:``
-        - ``/api/{api_version}/authors``: Gets all the authors' data with all the nested data such as quotes/tags objects for each author (eager loading).
-        - ``/api/{api_version}/authors/filter/<author_name>``: Gets the author's data, including its quotes/tags.
-
-2.  ``Quotes``:
-        - ``/api/{api_version}/quotes``: Gets all the quotes' data with all the nested data such as author/tags objects for each quote (eager loading).
-        - ``/api/{api_version}/quotes/filter/<author_name>``: Gets quotes data for a specific author.
-
-3.  ``Tags``:
-        - ``api/{api_version}/tags``: Gets all the tags objects.
 
 
 The Database model
@@ -149,8 +150,8 @@ The Database model
                     "quotes_tags",
                     Base.metadata,
                     Column("quote_id", Integer, ForeignKey("quotes.quote_id")),
-                    Column("tag_id", Integer, ForeignKey("tags.tag_id")),
-)
+                    Column("tag_id", Integer, ForeignKey("tags.tag_id")),)
+
 
 
 Improvements
@@ -169,9 +170,10 @@ Improvements
 Install and Run
 ================
 All the project are provided as containerised applications.
-on the root of the prject: run
+on the root of the project: run
 
 ``docker-compose up --biuld``
 
 
-*NB1*: Please Note, if you want to run the clone the project and run it, make sure that you get all the ``git submodules`` install into the project: ``git submodule add link``, Also create a ``python env`` and install all the packages into it,
+*NB*: Please Note, if you want to clone the project and run it, make sure that you get all the ``git submodules`` install into the project: ``git submodule add link``, Also create a ``python env`` and install all the packages into it,
+
